@@ -30,7 +30,7 @@ var manifest = {
   firefox: {
     "applications": {
       "gecko": {
-        "id": "my-app-id@mozilla.org"
+        "id": "github-tell-me-when-it-closes@kevinjalbert.addons.mozilla.org"
       }
     }
   }
@@ -42,7 +42,7 @@ gulp.task('clean', () => {
 })
 
 gulp.task('build', (cb) => {
-  $.runSequence('clean', 'styles', 'ext', cb)
+  $.runSequence('clean', 'ext', cb)
 });
 
 gulp.task('watch', ['build'], () => {
@@ -66,17 +66,6 @@ gulp.task('ext', ['manifest', 'js'], () => {
 gulp.task('js', () => {
   return buildJS(target)
 })
-
-gulp.task('styles', () => {
-  return gulp.src('src/styles/**/*.scss')
-    .pipe($.plumber())
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
-    .pipe(gulp.dest(`build/${target}/styles`));
-});
 
 gulp.task("manifest", () => {
   return gulp.src('./manifest.json')
@@ -129,8 +118,6 @@ function buildJS(target) {
   const files = [
     'background.js',
     'contentscript.js',
-    'options.js',
-    'popup.js',
     'livereload.js'
   ]
 
@@ -149,11 +136,11 @@ function buildJS(target) {
     .pipe(buffer())
     .pipe(gulpif(!production, $.sourcemaps.init({ loadMaps: true }) ))
     .pipe(gulpif(!production, $.sourcemaps.write('./') ))
-    .pipe(gulpif(production, $.uglify({ 
+    .pipe(gulpif(production, $.uglify({
       "mangle": false,
       "output": {
         "ascii_only": true
-      } 
+      }
     })))
     .pipe(gulp.dest(`build/${target}/scripts`));
   });

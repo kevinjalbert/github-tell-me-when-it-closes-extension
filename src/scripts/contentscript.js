@@ -1,34 +1,25 @@
 import ext from "./utils/ext";
 
-var extractTags = () => {
-  var url = document.location.href;
-  if(!url || !url.match(/^http/)) return;
+ext.runtime.sendMessage({}, function(response) {
+	var readyStateCheckInterval = setInterval(function() {
+		if (document.readyState === "complete") {
+			clearInterval(readyStateCheckInterval);
 
-  var data = {
-    title: "",
-    description: "",
-    url: document.location.href
-  }
+      const threadSubscriptionStatus = document.getElementsByClassName("thread-subscription-status")[0];
 
-  var ogTitle = document.querySelector("meta[property='og:title']");
-  if(ogTitle) {
-    data.title = ogTitle.getAttribute("content")
-  } else {
-    data.title = document.title
-  }
+			const openLink = function() {
+        window.location = "https://tellmewhenitcloses.com?url=" + location.href;
+			};
 
-  var descriptionTag = document.querySelector("meta[property='og:description']") || document.querySelector("meta[name='description']")
-  if(descriptionTag) {
-    data.description = descriptionTag.getAttribute("content")
-  }
+			const tellMeWhenButton = document.createElement("button");
+      tellMeWhenButton.className = "btn btn-sm";
+      tellMeWhenButton.style.width = '100%';
+      tellMeWhenButton.style.marginBottom = '10px';
+			tellMeWhenButton.onclick = openLink;
+			tellMeWhenButton.innerText = "Tell Me When It Closes";
 
-  return data;
-}
+      threadSubscriptionStatus.parentNode.insertBefore(tellMeWhenButton, threadSubscriptionStatus.previousSibling);
 
-function onRequest(request, sender, sendResponse) {
-  if (request.action === 'process-page') {
-    sendResponse(extractTags())
-  }
-}
-
-ext.runtime.onMessage.addListener(onRequest);
+		}
+	}, 10);
+});

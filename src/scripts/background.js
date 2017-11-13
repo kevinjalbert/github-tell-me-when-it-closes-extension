@@ -1,12 +1,26 @@
 import ext from "./utils/ext";
 
-ext.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if(request.action === "perform-save") {
-      console.log("Extension Type: ", "/* @echo extension */");
-      console.log("PERFORM AJAX", request.data);
+const doublePageTracker = {};
 
-      sendResponse({ action: "saved" });
-    }
-  }
+ext.webNavigation.onHistoryStateUpdated.addListener(
+   function (event) {
+      if(doublePageTracker[event.url]) {
+        ext.tabs.executeScript(event.tabId, {
+          file: "scripts/contentscript.js"
+        });
+        delete doublePageTracker[event.url]
+      } else {
+        doublePageTracker[event.url] = true;
+      }
+   },
+   { url:   [  {urlMatches: 'github\.com\/.*?\/.*?\/(issues|pull)'}   ] }
+);
+
+ext.webNavigation.onCompleted.addListener(
+   function (event) {
+      ext.tabs.executeScript(event.tabId, {
+        file: "scripts/contentscript.js"
+      });
+   },
+   { url:   [  {urlMatches: 'github\.com\/.*?\/.*?\/(issues|pull)'}   ] }
 );

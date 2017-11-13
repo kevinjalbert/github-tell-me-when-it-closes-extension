@@ -1,14 +1,14 @@
 {
   "appName": {
-    "message": "Ext Starter",
+    "message": "GitHub: Tell Me When It Closes",
     "description": "The name of the extension."
   },
   "appDescription": {
-    "message": "Boilerplate for building cross browser extensions",
+    "message": "Add tellmewhenitcloses.com button to GitHub issues and pull requests.",
     "description": "The description of the extension."
   },
   "btnTooltip": {
-    "message": "Ext Starter",
+    "message": "GitHub: Tell Me When It Closes",
     "description": "Tooltip for the button."
   }
 }
