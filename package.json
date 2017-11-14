@@ -1,6 +1,6 @@
 {
   "name": "github-tell-me-when-it-closes-extension",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Add tellmewhenitcloses.com button to GitHub issues and pull requests.",
   "scripts": {
     "chrome-build": "cross-env TARGET=chrome gulp",
