@@ -16,7 +16,7 @@ ext.runtime.sendMessage({}, function(response) {
       const threadSubscriptionStatus = document.getElementsByClassName("thread-subscription-status")[0];
 
       const openLink = function() {
-        window.location = "https://tellmewhenitcloses.com?url=" + location.href;
+        window.open("https://tellmewhenitcloses.com?url=" + location.href);
       };
 
       const tellMeWhenButton = document.createElement("button");
