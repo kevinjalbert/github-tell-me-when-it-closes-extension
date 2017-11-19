@@ -1,6 +1,6 @@
 {
   "name": "github-tell-me-when-it-closes-extension",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Add tellmewhenitcloses.com button to GitHub issues and pull requests.",
   "scripts": {
     "changelog": "github_changelog_generator kevinjalbert/github-tell-me-when-it-closes-extension",
